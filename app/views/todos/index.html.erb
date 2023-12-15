@@ -3,7 +3,7 @@
 <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
 
 <div data-turbo-permanent>
-<%= form_with model: Todo.new do |f| %>
+<%= form_with model: Todo.new, id: "new_todo_form" do |f| %>
     <%= f.text_field :title %>
     <%= submit_tag "Create Todo" %>
 <% end %>
@@ -12,6 +12,18 @@
 <%= turbo_stream_from "todos" %>
 <ul>
     <% @todos.each do |todo| %>
-        <li><%= todo.title %></li>
+        <li>
+            <span style="<%= "text-decoration: line-through;" if todo.completed? %>"><%= todo.title %></span>
+            <%= link_to(todo.completed? ? "Undo" : "Done", todo, data: {turbo_method: :patch}) %>
+            <%= link_to("Delete", todo, data: {turbo_method: :delete}) %>
+        </li>
     <% end %>
 </ul>
+
+<script>
+  document.addEventListener('turbo:submit-end', event => {
+    if (event.target.id === 'new_todo_form') {
+      event.target.reset();
+    }
+  });
+</script>
