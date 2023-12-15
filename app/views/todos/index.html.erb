@@ -1,0 +1,17 @@
+<h1>Todos</h1>
+
+<%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
+
+<div data-turbo-permanent>
+<%= form_with model: Todo.new do |f| %>
+    <%= f.text_field :title %>
+    <%= submit_tag "Create Todo" %>
+<% end %>
+</div>
+
+<%= turbo_stream_from "todos" %>
+<ul>
+    <% @todos.each do |todo| %>
+        <li><%= todo.title %></li>
+    <% end %>
+</ul>

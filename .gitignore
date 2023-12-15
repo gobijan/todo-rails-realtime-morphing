@@ -33,3 +33,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/.tags
+/.tags_sorted_by_file
+/vendor/bundle/
