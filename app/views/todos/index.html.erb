@@ -1,24 +1,38 @@
-<h1>Todos</h1>
-
+<h1 class="">Todos</h1>
+<p class="">A simple demo using Rails 7.1 with Turbo 8 (main branch).</p>
 <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
 
 <div data-turbo-permanent>
-<%= form_with model: Todo.new, id: "new_todo_form" do |f| %>
-    <%= f.text_field :title %>
-    <%= submit_tag "Create Todo" %>
-<% end %>
+  <%= form_with model: Todo.new, id: "new_todo_form" do |f| %>
+  <div class="row no-space">
+    <div class="max field border left-round">
+      <%= f.text_field :title %>
+    </div>
+    <%= button_tag type: :submit, class: "button large right-round" do %>
+    <i>add</i> Add Todo
+    <% end %>
+
+  </div>
+
+  <% end %>
 </div>
 
 <%= turbo_stream_from "todos" %>
-<ul>
-    <% @todos.each do |todo| %>
-        <li>
-            <span style="<%= "text-decoration: line-through;" if todo.completed? %>"><%= todo.title %></span>
-            <%= link_to(todo.completed? ? "Undo" : "Done", todo, data: {turbo_method: :patch}) %>
-            <%= link_to("Delete", todo, data: {turbo_method: :delete}) %>
-        </li>
-    <% end %>
-</ul>
+
+<% @todos.each do |todo| %>
+
+<div class="row">
+  <%= link_to todo, data: {turbo_method: :patch}, class:"row max wave" do %>
+    <label class="checkbox">
+      <input type="checkbox" <%= "checked" if todo.completed? %>>
+      <span></span>
+    </label>
+    <div class="max"><%= todo.title %></div>
+  <% end %>
+  <%= link_to todo, data: {turbo_method: :delete} do %><i>delete</i><% end %>
+</div>
+
+<% end %>
 
 <script>
   document.addEventListener('turbo:submit-end', event => {
