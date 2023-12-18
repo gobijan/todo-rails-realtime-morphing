@@ -1,24 +1,44 @@
-<h1>Todos</h1>
+<nav class="pa2">
+    <h1 class="mv0 f4 fw6">Turbo 8 Todos</h1>
+    <p class="measure">This is a demo showcasing the upcoming Turbo 8 with morphing on a simple Rails 7 Hotwire Todo-App.</p>
+</nav>
 
+<main class="pa2">
 <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
 
 <div data-turbo-permanent>
-<%= form_with model: Todo.new, id: "new_todo_form" do |f| %>
-    <%= f.text_field :title %>
-    <%= submit_tag "Create Todo" %>
+<%= form_with model: Todo.new, id: "new_todo_form", class: "flex" do |f| %>
+    <%= f.text_field :title, class: "flex pa2 ba br2 br--left b--black dm-b--white-50 glow o-50" %>
+    <%= submit_tag "Create Todo", class: "bg-black white link dim br2 br--right ph3 pv2 ba b--black dm-b--white-50 pointer" %>
 <% end %>
 </div>
 
 <%= turbo_stream_from "todos" %>
-<ul>
+<ul class="list pl0 flex flex-column flex-gap-2 mw6">
     <% @todos.each do |todo| %>
-        <li>
-            <span style="<%= "text-decoration: line-through;" if todo.completed? %>"><%= todo.title %></span>
-            <%= link_to(todo.completed? ? "Undo" : "Done", todo, data: {turbo_method: :patch}) %>
-            <%= link_to("Delete", todo, data: {turbo_method: :delete}) %>
+        <%= turbo_frame_tag todo do %>
+        <li class="flex justify-between items-center hide-child ba dm-b--white-50 pa2 br2" id="<%= dom_id todo %>">
+            <div>
+                <%= link_to toggle_todo_path(todo), data: {turbo_method: :patch}, class: "link dim pointer pv2 flex-auto" do %>
+                    <%= todo.completed ? "✅" : "⬜" %>
+                  <%= todo.title %>
+                <% end %>
+            </div>
+            <div>
+                <!-- link to rename shall replace the content of -->
+                <%= link_to "Rename", edit_todo_path(todo), data: {turbo_method: :get}, class: "child link dim black dm-white" %>
+                <%= link_to "Delete", todo, data: {turbo_method: :delete, turbo_confirm: "Are you sure to delete?", turbo_frame: "_top"}, class: "child link dim black dm-white" %>
+            </div>
         </li>
+        <% end %>
     <% end %>
 </ul>
+
+<% if @todos.any? %>
+  <%= link_to "Clear completed todos", clear_completed_todos_path, data: {turbo_method: :delete}, class: "link dim black dm-white" %>
+<% end %>
+
+</main>
 
 <script>
   document.addEventListener('turbo:submit-end', event => {

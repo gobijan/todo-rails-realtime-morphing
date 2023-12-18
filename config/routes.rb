@@ -7,5 +7,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "todos#index"
-  resources :todos
+  resources :todos do
+    member do
+      patch :toggle
+    end
+    collection do
+      delete :clear_completed
+    end
+  end
 end

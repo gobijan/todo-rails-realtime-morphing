@@ -1,0 +1,6 @@
+<%= turbo_frame_tag @todo do %>
+    <%= form_with model: @todo, id: "edit_todo_form", class: "flex w-100 justify-between" do |f| %>
+        <%= f.text_field :title, class: "flex pa2 ba br2 br--left b--black dm-b--white-50 glow o-50 w-100" %>
+        <%= submit_tag "Update", class: "bg-black white link dim br2 br--right ph3 pv2 ba b--black dm-b--white-50 pointer" %>
+    <% end %>
+<% end %>
