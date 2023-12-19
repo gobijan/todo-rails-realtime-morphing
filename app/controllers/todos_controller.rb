@@ -1,6 +1,7 @@
 class TodosController < ApplicationController
   def index
     @todos = Todo.all.order(created_at: :desc)
+    @completed_todo_count = @todos.where(completed: true).count
   end
 
   def create

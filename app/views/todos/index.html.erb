@@ -5,6 +5,7 @@
 
 <main class="pa2">
 <%= turbo_refreshes_with method: :morph, scroll: :preserve  %>
+<%= turbo_stream_from "todos" %>
 
 <div data-turbo-permanent>
 <%= form_with model: Todo.new, id: "new_todo_form", class: "flex" do |f| %>
@@ -13,7 +14,7 @@
 <% end %>
 </div>
 
-<%= turbo_stream_from "todos" %>
+
 <ul class="list pl0 flex flex-column flex-gap-2 mw6">
     <% @todos.each do |todo| %>
         <%= turbo_frame_tag todo do %>
@@ -34,8 +35,8 @@
     <% end %>
 </ul>
 
-<% if @todos.any? %>
-  <%= link_to "Clear completed todos", clear_completed_todos_path, data: {turbo_method: :delete}, class: "link dim black dm-white" %>
+<% if @completed_todo_count > 0 %>
+  <%= link_to "Clear Completed Todos (#{@completed_todo_count})", clear_completed_todos_path, data: {turbo_method: :delete}, class: "link dim pv2 ph3 br2 bg-black white" %>
 <% end %>
 
 </main>
