@@ -20,7 +20,7 @@
         <%= turbo_frame_tag todo do %>
         <li class="flex justify-between items-center hide-child ba dm-b--white-50 pa2 br2" id="<%= dom_id todo %>">
             <div>
-                <%= link_to toggle_todo_path(todo), data: {turbo_method: :patch}, class: "link dim pointer pv2 flex-auto" do %>
+                <%= link_to toggle_todo_path(todo), data: {turbo_method: :patch, turbo_frame: "_top"}, class: "link dim pointer pv2 flex-auto" do %>
                     <%= todo.completed ? "✅" : "⬜" %>
                   <%= todo.title %>
                 <% end %>
