@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/hotwired/turbo-rails.git
-  revision: 75b25b5e25d0cf22b7eaf82fd8c5fbad3e256057
+  revision: 36ab3ad2af6cc62438a015f64c39248c89175bf6
   specs:
-    turbo-rails (2.0.0.pre.beta.1)
+    turbo-rails (2.0.0.pre.beta.2)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -125,7 +125,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.1)
-    irb (1.10.1)
+    irb (1.11.0)
       rdoc
       reline (>= 0.3.8)
     jbuilder (2.11.5)
@@ -215,7 +215,7 @@ GEM
       psych (>= 4.0.0)
     redis (5.0.8)
       redis-client (>= 0.17.0)
-    redis-client (0.19.0)
+    redis-client (0.19.1)
       connection_pool
     regexp_parser (2.8.3)
     reline (0.4.1)
